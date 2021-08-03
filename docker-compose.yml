@@ -1,0 +1,55 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: otel-grafana-demo
+    volumes:
+      - ./db/data/:/var/lib/postgresql/data/ # Persist data locally
+    ports:
+      - 5432:5432
+  api:
+    build: ./api
+    volumes:
+      - ./api:/usr/api
+    ports:
+      - 8080:8080
+    command: npm run dev
+    depends_on: 
+      - db
+  app:
+    build: ./app
+    command: npm run dev -- -p 80
+    volumes:
+      - ./app:/usr/app
+    ports:
+      - 80:80
+    depends_on: 
+      - api
+  # Observability services
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
+  prometheus:
+    image: prom/prometheus:latest
+    user: root
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000

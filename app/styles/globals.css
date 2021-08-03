@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    scroll-behavior: smooth;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    @apply focus:outline-none focus:ring-offset-1 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-75;
+  }
+
+  *::selection {
+    @apply bg-primary-500 text-white;
+  }
+}
+
+@layer components {
+  /* Button Styles */
+  .btn {
+    @apply py-2 px-4 bg-primary-500 text-base font-medium rounded-md text-gray-900 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-75;
+    @apply disabled:opacity-70;
+  }
+
+  .btn-large {
+    @apply px-5 py-3;
+  }
+
+  .btn-secondary {
+    @apply btn;
+    @apply flex items-center justify-center px-5 py-3 border text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900;
+  }
+
+  .btn-outline {
+    @apply btn;
+    @apply bg-white border border-gray-300 text-gray-700 hover:bg-gray-50;
+  }
+
+  /* Forms */
+  .label {
+    @apply block text-sm font-medium text-gray-600;
+  }
+  .input {
+    @apply disabled:opacity-50;
+    @apply py-2 px-4 mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md;
+    @apply placeholder-gray-500;
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "otel-grafana-demo-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./src/server.js",
+  "repository": {
+    "url": "https://github.com/connorlindsey/otel-grafana-demo"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf ./dist/",
+    "start": "node ./dist/server.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.27.0",
+    "fastify": "^3.19.1",
+    "fastify-cors": "^6.0.2",
+    "fastify-plugin": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.0",
+    "nodemon": "^2.0.12",
+    "prisma": "^2.27.0",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ignore": [
+      "./src/**/*.test.ts"
+    ],
+    "ext": "ts",
+    "exec": "ts-node ./src/server.ts"
+  },
+  "prisma": {
+    "schema": "./src/db/schema.prisma"
+  }
+}
