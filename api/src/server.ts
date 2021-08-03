@@ -1,6 +1,9 @@
 import fastify from "fastify"
 import prismaPlugin from "./db/prisma"
 import { routes as indexRoutes } from "./routes/index"
+import categoryRoutes from "./routes/category"
+import transactionRoutes from "./routes/transaction"
+import overviewRoutes from "./routes/overview"
 import fastifyCors from "fastify-cors"
 
 const PORT = process.env.PORT || 8080
@@ -15,6 +18,9 @@ server.register(prismaPlugin)
 
 // Routes
 server.register(indexRoutes)
+server.register(categoryRoutes, { prefix: "/categorie" })
+server.register(transactionRoutes, { prefix: "/transaction" })
+server.register(overviewRoutes, { prefix: "/overview" })
 
 const start = async () => {
   try {

@@ -2,11 +2,13 @@ version: "3.7"
 
 services:
   db:
+    container_name: otel-grafana-db
     image: postgres
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: otel-grafana-demo
+      POSTGRES_PASSWORD: localpost
     volumes:
       - ./db/data/:/var/lib/postgresql/data/ # Persist data locally
     ports:
@@ -18,6 +20,8 @@ services:
     ports:
       - 8080:8080
     command: npm run dev
+    environment: 
+      - DATABASE_URL=postgresql://postgres@host.docker.internal:5432/otel-grafana-demo
     depends_on: 
       - db
   app:
