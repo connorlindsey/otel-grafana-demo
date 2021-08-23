@@ -22,6 +22,7 @@ const routes: FastifyPluginAsync = async (fastify) => {
   fastify.post<{ Body: CreateCategoryInput }>("/", async (req, reply) => {
     try {
       const { title } = req.body
+      console.log(req.body)
       if (!title) {
         reply.code(400)
         return { message: "Invalid request" }
@@ -43,11 +44,22 @@ const routes: FastifyPluginAsync = async (fastify) => {
         reply.code(400)
         return { message: "Invalid request" }
       }
+
+      await fastify.prisma.transaction.updateMany({
+        data: {
+          categoryId: null,
+        },
+        where: {
+          categoryId: id,
+        },
+      })
+
       await fastify.prisma.category.delete({
         where: {
           id,
         },
       })
+      return { message: `Success! Category deleted` }
     } catch (err) {
       reply.code(400)
       return { message: err.message }

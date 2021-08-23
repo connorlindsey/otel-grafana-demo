@@ -11,7 +11,7 @@ export default function Nav() {
 
   return (
     <div className="bg-white shadow-sm">
-      <header className="flex flex-row justify-between px-2 py-4">
+      <header className="flex flex-row justify-between px-3 py-4">
         <div>
           <Link href="/">
             <a className="text-gray-600 font-medium hover:text-primary-500">Home</a>

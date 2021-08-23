@@ -1,6 +1,9 @@
 import React, { useState } from "react"
 
-export type FormEvent = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+export type FormEvent =
+  | React.ChangeEvent<HTMLInputElement>
+  | React.ChangeEvent<HTMLTextAreaElement>
+  | React.ChangeEvent<HTMLSelectElement>
 export default function useForm<T extends { [key: string]: any }>(initial: T = {} as T) {
   const [inputs, setInputs] = useState<T>(initial)
 

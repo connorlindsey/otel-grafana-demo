@@ -10,7 +10,7 @@ const routes: FastifyPluginAsync = async (fastify) => {
         if (t.amount > 0) {
           income += t.amount
         } else {
-          expenses += t.amount
+          expenses += t.amount * -1
         }
       })
       return {

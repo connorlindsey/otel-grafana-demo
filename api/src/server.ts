@@ -18,7 +18,7 @@ server.register(prismaPlugin)
 
 // Routes
 server.register(indexRoutes)
-server.register(categoryRoutes, { prefix: "/categorie" })
+server.register(categoryRoutes, { prefix: "/category" })
 server.register(transactionRoutes, { prefix: "/transaction" })
 server.register(overviewRoutes, { prefix: "/overview" })
 

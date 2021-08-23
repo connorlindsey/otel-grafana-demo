@@ -13,7 +13,11 @@ interface DeleteTransactionInput {
 const routes: FastifyPluginAsync = async (fastify) => {
   fastify.get("/", async (_, reply) => {
     try {
-      const categories = await fastify.prisma.transaction.findMany()
+      const categories = await fastify.prisma.transaction.findMany({
+        include: {
+          category: true,
+        },
+      })
       return categories
     } catch (err) {
       reply.code(400)
@@ -29,8 +33,9 @@ const routes: FastifyPluginAsync = async (fastify) => {
         return { message: "Invalid request" }
       }
       await fastify.prisma.transaction.create({
-        data: { title, amount, categoryId },
+        data: { title, amount: Number(amount) * 100, categoryId: Number(categoryId) },
       })
+
       return { message: `Success! Transaction created.` }
     } catch (err) {
       reply.code(400)
@@ -50,6 +55,7 @@ const routes: FastifyPluginAsync = async (fastify) => {
           id,
         },
       })
+      return { message: `Success! Transaction deleted` }
     } catch (err) {
       reply.code(400)
       return { message: err.message }

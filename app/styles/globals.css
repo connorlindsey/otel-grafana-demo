@@ -24,7 +24,7 @@
   /* Button Styles */
   .btn {
     @apply py-2 px-4 bg-primary-500 text-base font-medium rounded-md text-gray-900 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-75;
-    @apply disabled:opacity-70;
+    @apply flex items-center justify-center disabled:opacity-70;
   }
 
   .btn-large {
@@ -33,7 +33,7 @@
 
   .btn-secondary {
     @apply btn;
-    @apply flex items-center justify-center px-5 py-3 border text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900;
+    @apply px-5 py-3 border text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900;
   }
 
   .btn-outline {
@@ -47,7 +47,32 @@
   }
   .input {
     @apply disabled:opacity-50;
-    @apply py-2 px-4 mt-1 focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md;
+    @apply text-sm py-2 px-3 mt-1 focus:ring-primary-500 focus:ring-offset-1 focus:border-primary-500 block w-full border-gray-300 rounded-md;
     @apply placeholder-gray-500;
+  }
+
+  /* Tables */
+  .table-wrapper {
+    @apply overflow-hidden border border-gray-200 sm:rounded-lg;
+  }
+
+  .table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+
+  .thead {
+    @apply bg-gray-50;
+  }
+
+  .tbody {
+    @apply bg-white divide-y divide-gray-200;
+  }
+
+  .th {
+    @apply px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+  }
+
+  .td {
+    @apply px-3 py-2 whitespace-nowrap text-sm text-gray-500;
   }
 }
