@@ -6,29 +6,28 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native","darwin","linux-arm-openssl-1.1.x"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin", "linux-arm-openssl-1.1.x"]
 }
 
 model Transaction {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title String @db.VarChar(255)
-  amount Int
-  category Category? @relation(fields: [categoryId], references: [id])
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  title      String    @db.VarChar(255)
+  amount     Int
+  category   Category? @relation(fields: [categoryId], references: [id])
   categoryId Int?
 
   @@map(name: "transaction")
 }
 
 model Category {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title String @db.VarChar(255)
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  title        String        @db.VarChar(255)
   transactions Transaction[]
-
 
   @@map(name: "category")
 }

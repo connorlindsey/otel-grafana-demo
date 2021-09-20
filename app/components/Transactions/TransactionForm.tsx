@@ -19,7 +19,7 @@ export default function TransactionForm() {
 
   return (
     <>
-      <td className="px-3 py-2 td">0</td>
+      <td className="px-3 py-2 td"></td>
       <td className="px-3 py-2">
         <label htmlFor="title" className="sr-only">
           Transaction description
@@ -37,7 +37,6 @@ export default function TransactionForm() {
         <label htmlFor="categoryId" className="sr-only">
           Transaction category
         </label>
-        {/* TODO: Select category */}
         <select
           id="categoryId"
           name="categoryId"
@@ -49,6 +48,7 @@ export default function TransactionForm() {
             Category
           </option>
           {categories &&
+            categories.length &&
             categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.title}
@@ -75,7 +75,9 @@ export default function TransactionForm() {
         </div>
       </td>
       <td className="td text-center">
-        <FiPlus onClick={onSubmit} className="cursor-pointer hover:text-gray-600" />
+        <button onClick={onSubmit}>
+          <FiPlus className="cursor-pointer hover:text-gray-600" />
+        </button>
       </td>
     </>
   )

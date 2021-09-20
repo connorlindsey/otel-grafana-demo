@@ -13,10 +13,23 @@
     "start": "node ./dist/server.js"
   },
   "dependencies": {
+    "@autotelic/fastify-opentelemetry": "^0.16.0",
+    "@opentelemetry/api": "^1.0.3",
+    "@opentelemetry/core": "^0.24.0",
+    "@opentelemetry/exporter-jaeger": "^0.24.0",
+    "@opentelemetry/exporter-prometheus": "^0.24.0",
+    "@opentelemetry/instrumentation": "^0.24.0",
+    "@opentelemetry/instrumentation-http": "^0.24.0",
+    "@opentelemetry/node": "^0.24.0",
+    "@opentelemetry/resources": "^0.24.0",
+    "@opentelemetry/sdk-metrics-base": "^0.24.1-alpha.4",
+    "@opentelemetry/semantic-conventions": "^0.24.0",
+    "@opentelemetry/tracing": "^0.24.0",
     "@prisma/client": "^2.27.0",
     "fastify": "^3.19.1",
     "fastify-cors": "^6.0.2",
-    "fastify-plugin": "^3.0.0"
+    "fastify-plugin": "^3.0.0",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "@types/node": "^16.4.0",

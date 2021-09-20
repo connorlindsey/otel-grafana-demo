@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from "fastify"
+import { categoryGauge } from "../../monitoring/metricsConfig"
 
 interface CreateCategoryInput {
   title: string
@@ -22,7 +23,6 @@ const routes: FastifyPluginAsync = async (fastify) => {
   fastify.post<{ Body: CreateCategoryInput }>("/", async (req, reply) => {
     try {
       const { title } = req.body
-      console.log(req.body)
       if (!title) {
         reply.code(400)
         return { message: "Invalid request" }
@@ -30,10 +30,13 @@ const routes: FastifyPluginAsync = async (fastify) => {
       await fastify.prisma.category.create({
         data: { title },
       })
+
+      categoryGauge.add(1)
+
       return { message: `Success! Category ${title} created.` }
     } catch (err) {
       reply.code(400)
-      return { message: err.message }
+      return { message: (err as Error).message }
     }
   })
 
@@ -59,10 +62,13 @@ const routes: FastifyPluginAsync = async (fastify) => {
           id,
         },
       })
+
+      categoryGauge.add(-1)
+
       return { message: `Success! Category deleted` }
     } catch (err) {
       reply.code(400)
-      return { message: err.message }
+      return { message: (err as Error).message }
     }
   })
 }

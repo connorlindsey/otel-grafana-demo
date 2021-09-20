@@ -4,7 +4,6 @@ services:
   db:
     container_name: otel-grafana-db
     image: postgres
-    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: otel-grafana-demo
@@ -14,17 +13,19 @@ services:
     ports:
       - 5432:5432
   api:
+    container_name: api
     build: ./api
     volumes:
       - ./api:/usr/api
+      - ./data/api/:/usr/api/data/
     ports:
-      - 8080:8080
+      - 8080:8080 # API
+      - 9464:9464 # Metrics API
     command: npm run dev
-    environment: 
-      - DATABASE_URL=postgresql://postgres@host.docker.internal:5432/otel-grafana-demo
     depends_on: 
       - db
   app:
+    container_name: app
     build: ./app
     command: npm run dev -- -p 80
     volumes:
@@ -33,6 +34,7 @@ services:
       - 80:80
     depends_on: 
       - api
+      - db
   # Observability services
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -53,7 +55,36 @@ services:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
+
+  promtail:
+    image: grafana/promtail
+    volumes:
+      - ./config/promtail/promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - ./data/api/:/usr/api/data/
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    depends_on:
+      - api
+      - loki
+
+  loki:
+    image: grafana/loki
+    ports:
+      - 3100:3100
+    volumes:
+      - ./config/loki/loki-config.yaml:/etc/loki/loki-config.yaml
+      - ./data/loki/data:/data/loki
+    command: -config.file=/etc/loki/loki-config.yaml
+
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:main
+    environment: 
+      # Disable authentication
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_NAME=Main Org.
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./config/provisioning/:/etc/grafana/provisioning
     ports:
       - 3000:3000

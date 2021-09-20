@@ -11,7 +11,7 @@ export default function Dashboard() {
         <title>Dashboard | OpenTelemetry Grafana Demo</title>
       </Head>
       <TransactionsProvider>
-        <main className="grid grid-cols-1 auto-rows-1fr gap-3 px-3 py-4 md:grid-cols-3 lg:grid-cols-12">
+        <main className="grid grid-cols-1 auto-rows-1fr gap-3 px-3 md:grid-cols-3 lg:grid-cols-12">
           <div className="rounded-md shadow bg-white px-3 py-4 lg:col-span-3">
             <Overview />
           </div>

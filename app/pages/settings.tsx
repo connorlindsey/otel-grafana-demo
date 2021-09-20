@@ -7,7 +7,7 @@ export default function Settings() {
         <title>Settings | OpenTelemetry Grafana Demo</title>
       </Head>
 
-      <main>
+      <main className="px-3">
         <h1>Settings ⚙️</h1>
       </main>
     </div>

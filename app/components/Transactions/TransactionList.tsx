@@ -58,7 +58,9 @@ export default function TransactionList() {
               </>
             ) : (
               <tr>
-                <td>No transactions recorded yet.</td>
+                <td colSpan={5} className="td">
+                  No transactions recorded yet.
+                </td>
               </tr>
             )}
           </tbody>

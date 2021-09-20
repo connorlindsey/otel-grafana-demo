@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from "fastify"
+import { balanceGauge, transactionGauge } from "../../monitoring/metricsConfig"
 
 interface CreateTransactionInput {
   title: string
@@ -21,7 +22,7 @@ const routes: FastifyPluginAsync = async (fastify) => {
       return categories
     } catch (err) {
       reply.code(400)
-      return { message: err.message }
+      return { message: (err as Error).message }
     }
   })
 
@@ -36,10 +37,13 @@ const routes: FastifyPluginAsync = async (fastify) => {
         data: { title, amount: Number(amount) * 100, categoryId: Number(categoryId) },
       })
 
+      transactionGauge.add(1)
+      balanceGauge.add(Number(amount) * 100)
+
       return { message: `Success! Transaction created.` }
     } catch (err) {
       reply.code(400)
-      return { message: err.message }
+      return { message: (err as Error).message }
     }
   })
 
@@ -50,15 +54,20 @@ const routes: FastifyPluginAsync = async (fastify) => {
         reply.code(400)
         return { message: "Invalid request" }
       }
-      await fastify.prisma.transaction.delete({
+
+      const res = await fastify.prisma.transaction.delete({
         where: {
           id,
         },
       })
+
+      transactionGauge.add(-1)
+      balanceGauge.add(res.amount)
+
       return { message: `Success! Transaction deleted` }
     } catch (err) {
       reply.code(400)
-      return { message: err.message }
+      return { message: (err as Error).message }
     }
   })
 }

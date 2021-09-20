@@ -39,20 +39,21 @@ export default function Categories() {
           </button>
         </form>
         <div className="mt-2 space-y-2">
-          {categories &&
-            categories.map((cat) => (
-              <div
-                className="group flex justify-between items-center border border-gray-300 rounded-md bg-gray-50 py-2 px-3"
-                key={cat.id}>
-                <div>
-                  <div>{cat.title}</div>
+          {categories && categories.length
+            ? categories.map((cat) => (
+                <div
+                  className="group flex justify-between items-center border border-gray-300 rounded-md bg-gray-50 py-2 px-3"
+                  key={cat.id}>
+                  <div>
+                    <div>{cat.title}</div>
+                  </div>
+                  <FiTrash
+                    className="opacity-0 group-hover:opacity-100 hover:text-red-500 hover:cursor-pointer"
+                    onClick={() => onDeleteCategory(cat.id)}
+                  />
                 </div>
-                <FiTrash
-                  className="opacity-0 group-hover:opacity-100 hover:text-red-500 hover:cursor-pointer"
-                  onClick={() => onDeleteCategory(cat.id)}
-                />
-              </div>
-            ))}
+              ))
+            : null}
         </div>
       </div>
     </div>
