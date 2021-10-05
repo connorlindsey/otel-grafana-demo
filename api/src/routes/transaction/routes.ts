@@ -62,7 +62,7 @@ const routes: FastifyPluginAsync = async (fastify) => {
       })
 
       transactionGauge.add(-1)
-      balanceGauge.add(res.amount)
+      balanceGauge.add(-1 * res.amount)
 
       return { message: `Success! Transaction deleted` }
     } catch (err) {
