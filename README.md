@@ -22,8 +22,6 @@ This demo application demonstrates how to monitor a JavaScript application using
 2. Open the app at http://localhost
 3. View traces, logs, and metrics in Grafana at http://localhost:3000
 
-
-
 ## Additional Resources
 - [Grafana Demo](https://play.grafana.org/d/000000012/grafana-play-home?orgId=1)
 - [Grafana Cloud](https://grafana.com/products/cloud/) - Actually useful free tier
