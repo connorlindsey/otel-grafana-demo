@@ -15,13 +15,16 @@ services:
   api:
     container_name: api
     build: ./api
+    environment:
+      DATABASE_URL: "postgresql://postgres:localpost@db:5432/otel-grafana-demo"
     volumes:
       - ./api:/usr/api
       - ./data/api/:/usr/api/data/
+      - /usr/api/node_modules
     ports:
       - 8080:8080 # API
       - 9464:9464 # Metrics API
-    command: npm run dev
+    command: ./setup.sh
     depends_on: 
       - db
   app:
@@ -30,6 +33,7 @@ services:
     command: npm run dev -- -p 80
     volumes:
       - ./app:/usr/app
+      - /usr/app/node_modules
     ports:
       - 80:80
     depends_on: 

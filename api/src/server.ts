@@ -40,6 +40,7 @@ const start = async () => {
     await server.listen(PORT, "0.0.0.0")
     console.log(`Server listening on port ${PORT}`)
   } catch (err) {
+    console.log((err as Error).message)
     server.log.error(err)
     process.exit(1)
   }

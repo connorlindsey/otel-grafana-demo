@@ -10,7 +10,8 @@
     "dev": "nodemon",
     "build": "tsc -p tsconfig.json",
     "clean": "rm -rf ./dist/",
-    "start": "node ./dist/server.js"
+    "start": "node ./dist/server.js",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@autotelic/fastify-opentelemetry": "^0.16.0",
